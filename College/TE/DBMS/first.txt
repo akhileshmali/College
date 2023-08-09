@@ -1,0 +1,381 @@
+(base) admin1@admin1:~$ mysql -u root -p;
+Enter password: 
+ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+(base) admin1@admin1:~$ mysql -u root -h localhost -p
+Enter password: 
+ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+(base) admin1@admin1:~$ mysqladmin --user={USER_NAME} password "{NEW_PASSWORD_HERE}"
+mysqladmin: connect to server at 'localhost' failed
+error: 'Access denied for user '{USER_NAME}'@'localhost' (using password: NO)'
+(base) admin1@admin1:~$ mysqladmin --user={localhost} password "{NEW_PASSWORD_HERE}"
+mysqladmin: connect to server at 'localhost' failed
+error: 'Access denied for user '{localhost}'@'localhost' (using password: NO)'
+(base) admin1@admin1:~$ sudo bash
+[sudo] password for admin1: 
+(base) root@admin1:~# mysql -u @localhost -p
+Enter password: 
+ERROR 1045 (28000): Access denied for user '@localhost'@'localhost' (using password: YES)
+(base) root@admin1:~# mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 5.7.42-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use database
+ERROR 1049 (42000): Unknown database 'database'
+mysql> use database;
+ERROR 1049 (42000): Unknown database 'database'
+mysql> show databases
+    -> ;       
+;
+^C
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| Account            |
+| Company_Details    |
+| TE2                |
+| TE39STD            |
+| TEComp             |
+| TE_39              |
+| TE_B_67            |
+| bank               |
+| d1                 |
+| demo               |
+| exam               |
+| mescoe             |
+| mescoe1            |
+| mock               |
+| mysql              |
+| performance_schema |
+| project            |
+| student            |
+| student11          |
+| student_management |
+| sys                |
++--------------------+
+22 rows in set (0.30 sec)
+
+mysql> use database TECOMP
+ERROR 1049 (42000): Unknown database 'database'
+mysql> create database TECOMP1
+    -> /c
+/c
+^C
+mysql> create database TECOMP1;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use TECOMP1
+Database changed
+mysql> create table student(Roll_no int(3),Name varchar(10),DOB date,Blood_Group (4),Mobile_No int(10),Email_id varchar(15));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(4),Mobile_No int(10),Email_id varchar(15))' at line 1
+mysql> create table student(Roll_no int(3),Name varchar(10),DOB date(),Blood_Group (4),Mobile_No int(10),Email_id varchar(15));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(),Blood_Group (4),Mobile_No int(10),Email_id varchar(15))' at line 1
+mysql> create table student(Roll_no int(3),Name varchar(10),DOB date,Blood_Group (4),Mobile_No int(10),Email_id varchar(15));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(4),Mobile_No int(10),Email_id varchar(15))' at line 1
+mysql> create table student(Roll_no int(3),Name varchar(10),DOB varchar(10),Blood_Group (4),Mobile_No int(10),Email_id varchar(15));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(4),Mobile_No int(10),Email_id varchar(15))' at line 1
+mysql> create table student(Roll_no int(3),Name varchar(10),DOB date,Blood_Group varchar(4),Mobile_No int(10),Email_id varchar(15));
+Query OK, 0 rows affected (0.28 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_TECOMP1 |
++-------------------+
+| student           |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> describe student
+    -> ;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Roll_no     | int(3)      | YES  |     | NULL    |       |
+| Name        | varchar(10) | YES  |     | NULL    |       |
+| DOB         | date        | YES  |     | NULL    |       |
+| Blood_Group | varchar(4)  | YES  |     | NULL    |       |
+| Mobile_No   | int(10)     | YES  |     | NULL    |       |
+| Email_id    | varchar(15) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> insert into student values(006,Akhilesh,13/01/2004,B+ve,9874561230,tempmail@gmail.com),values(007,Krunal,01/01/2003,O+ve,5647123689,tempmail1.com);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@gmail.com),values(007,Krunal,01/01/2003,O+ve,5647123689,tempmail1.com)' at line 1
+mysql> insert into student values(006,Akhilesh,13/01/2004,B+ve,9874561230,tempmail@gmail.com);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@gmail.com)' at line 1
+mysql> insert into student values(006,Akhilesh,13/01/2004,B+ve,9874561230,temp@mail.com); 
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@mail.com)' at line 1
+mysql> insert into student values(006,Akhilesh,13/01/2004,B+ve,9874561230,"temp@mail.com");
+ERROR 1054 (42S22): Unknown column 'Akhilesh' in 'field list'
+mysql> insert into student values(006,"Akhilesh",13/01/2004,"B+ve",9874561230,"temp@mail.com");
+ERROR 1292 (22007): Incorrect date value: '0.006487025948103792' for column 'DOB' at row 1
+mysql> insert into student values(006,"Akhilesh",2004-01-01,"B+ve",9874561230,"temp@mail.com");
+ERROR 1292 (22007): Incorrect date value: '2002' for column 'DOB' at row 1
+mysql> insert into student values(006,"Akhilesh","2004-01-01","B+ve",9874561230,"temp@mail.com");
+ERROR 1264 (22003): Out of range value for column 'Mobile_No' at row 1
+mysql> alter table student 
+    -> modify Moblie_No <varchar(10)>
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '<varchar(10)>' at line 2
+mysql> alter table student modify Moblie_No varchar(10);
+ERROR 1054 (42S22): Unknown column 'Moblie_No' in 'student'
+mysql> describe student                                                                       -> ;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Roll_no     | int(3)      | YES  |     | NULL    |       |
+| Name        | varchar(10) | YES  |     | NULL    |       |
+| DOB         | date        | YES  |     | NULL    |       |
+| Blood_Group | varchar(4)  | YES  |     | NULL    |       |
+| Mobile_No   | int(10)     | YES  |     | NULL    |       |
+| Email_id    | varchar(15) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> alter table student modify Moblie_No varchar(10);
+ERROR 1054 (42S22): Unknown column 'Moblie_No' in 'student'
+mysql> alter table student modify Mobile_No varchar(10);
+Query OK, 0 rows affected (0.63 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe student;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Roll_no     | int(3)      | YES  |     | NULL    |       |
+| Name        | varchar(10) | YES  |     | NULL    |       |
+| DOB         | date        | YES  |     | NULL    |       |
+| Blood_Group | varchar(4)  | YES  |     | NULL    |       |
+| Mobile_No   | varchar(10) | YES  |     | NULL    |       |
+| Email_id    | varchar(15) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> insert into student values(006,"Akhilesh","2004-01-01","B+ve","9874561230","tempmail@gmail.com"),values(007,"Krunal","2003-01-01","O+ve","5647123689","tempmail1.com");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values(007,"Krunal","2003-01-01","O+ve","5647123689","tempmail1.com")' at line 1
+mysql> insert into student values(006,"Akhilesh","2004-01-01","B+ve","9874561230","tempmail@gmail.com"),(007,"Krunal","2003-01-01","O+ve","5647123689","tempmail1.com");
+ERROR 1406 (22001): Data too long for column 'Email_id' at row 1
+mysql> insert into student values(006,"Akhilesh","2004-01-01","B+ve","9874561230","tempm"),(007,"Krunal","2003-01-01","O+ve","5647123689","temp");
+Query OK, 2 rows affected (0.04 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> describe student;                                                                  +-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Roll_no     | int(3)      | YES  |     | NULL    |       |
+| Name        | varchar(10) | YES  |     | NULL    |       |
+| DOB         | date        | YES  |     | NULL    |       |
+| Blood_Group | varchar(4)  | YES  |     | NULL    |       |
+| Mobile_No   | varchar(10) | YES  |     | NULL    |       |
+| Email_id    | varchar(15) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> show student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'student' at line 1
+mysql> show table student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'student' at line 1
+mysql> select * from student;
++---------+----------+------------+-------------+------------+----------+
+| Roll_no | Name     | DOB        | Blood_Group | Mobile_No  | Email_id |
++---------+----------+------------+-------------+------------+----------+
+|       6 | Akhilesh | 2004-01-01 | B+ve        | 9874561230 | tempm    |
+|       7 | Krunal   | 2003-01-01 | O+ve        | 5647123689 | temp     |
++---------+----------+------------+-------------+------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> insert into student values
+    -> (008,"Omkar","2003-01-01","O+ve","5647123689","temp"),
+    -> (010,"Sahil","2003-01-01","O+ve","5647123689","temp"),
+    -> (009,"Ujwal","2003-01-01","O+ve","5647123689","temp"),
+    -> (021,"Parth","2003-01-01","O+ve","5647123689","temp"),
+    -> (039,"Kaustubh","2003-01-01","O+ve","5647123689","temp");
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++---------+----------+------------+-------------+------------+----------+
+| Roll_no | Name     | DOB        | Blood_Group | Mobile_No  | Email_id |
++---------+----------+------------+-------------+------------+----------+
+|       6 | Akhilesh | 2004-01-01 | B+ve        | 9874561230 | tempm    |
+|       7 | Krunal   | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|       8 | Omkar    | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|      10 | Sahil    | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|       9 | Ujwal    | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|      21 | Parth    | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|      39 | Kaustubh | 2003-01-01 | O+ve        | 5647123689 | temp     |
++---------+----------+------------+-------------+------------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from student order by Roll_no asc;
++---------+----------+------------+-------------+------------+----------+
+| Roll_no | Name     | DOB        | Blood_Group | Mobile_No  | Email_id |
++---------+----------+------------+-------------+------------+----------+
+|       6 | Akhilesh | 2004-01-01 | B+ve        | 9874561230 | tempm    |
+|       7 | Krunal   | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|       8 | Omkar    | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|       9 | Ujwal    | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|      10 | Sahil    | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|      21 | Parth    | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|      39 | Kaustubh | 2003-01-01 | O+ve        | 5647123689 | temp     |
++---------+----------+------------+-------------+------------+----------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE student 
+    -> ADD Last_Name
+    -> [After Name];
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[After Name]' at line 3
+mysql> ALTER TABLE student ADD COLUMN Last_Name VARCHAR(10) After Name;
+Query OK, 0 rows affected (0.49 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe student;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Roll_no     | int(3)      | YES  |     | NULL    |       |
+| Name        | varchar(10) | YES  |     | NULL    |       |
+| Last_Name   | varchar(10) | YES  |     | NULL    |       |
+| DOB         | date        | YES  |     | NULL    |       |
+| Blood_Group | varchar(4)  | YES  |     | NULL    |       |
+| Mobile_No   | varchar(10) | YES  |     | NULL    |       |
+| Email_id    | varchar(15) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE student
+    -> ADD COLUMN Sr_No INT AUTO_INCREMENT PRIMARY KEY;
+Query OK, 0 rows affected (0.50 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe student;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| Roll_no     | int(3)      | YES  |     | NULL    |                |
+| Name        | varchar(10) | YES  |     | NULL    |                |
+| Last_Name   | varchar(10) | YES  |     | NULL    |                |
+| DOB         | date        | YES  |     | NULL    |                |
+| Blood_Group | varchar(4)  | YES  |     | NULL    |                |
+| Mobile_No   | varchar(10) | YES  |     | NULL    |                |
+| Email_id    | varchar(15) | YES  |     | NULL    |                |
+| Sr_No       | int(11)     | NO   | PRI | NULL    | auto_increment |
++-------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE student ADD COLSr_No ;
+[1]+  Stopped                 mysql -u root -p
+(base) root@admin1:~# mysql -u root -h localhost -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 5.7.42-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| Account            |
+| Company_Details    |
+| TE2                |
+| TE39STD            |
+| TECOMP1            |
+| TEComp             |
+| TE_39              |
+| TE_B_67            |
+| bank               |
+| d1                 |
+| demo               |
+| exam               |
+| mescoe             |
+| mescoe1            |
+| mock               |
+| mysql              |
+| performance_schema |
+| project            |
+| student            |
+| student11          |
+| student_management |
+| sys                |
++--------------------+
+23 rows in set (0.00 sec)
+
+mysql> use TECOMP1;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> describe student;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| Roll_no     | int(3)      | YES  |     | NULL    |                |
+| Name        | varchar(10) | YES  |     | NULL    |                |
+| Last_Name   | varchar(10) | YES  |     | NULL    |                |
+| DOB         | date        | YES  |     | NULL    |                |
+| Blood_Group | varchar(4)  | YES  |     | NULL    |                |
+| Mobile_No   | varchar(10) | YES  |     | NULL    |                |
+| Email_id    | varchar(15) | YES  |     | NULL    |                |
+| Sr_No       | int(11)     | NO   | PRI | NULL    | auto_increment |
++-------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE student 
+    -> MODIFY COLUMN Sr_No int AUTO_INCREMENT PRIMARY KEY first;
+ERROR 1068 (42000): Multiple primary key defined
+mysql> ALTER TABLE student MODIFY Sr_No int AUTO_INCREMENT PRIMARY KEY first;
+ERROR 1068 (42000): Multiple primary key defined
+mysql> ALTER TABLE student MODIFY Sr_No int AUTO_INCREMENT first;
+Query OK, 0 rows affected (0.43 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe student;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| Sr_No       | int(11)     | NO   | PRI | NULL    | auto_increment |
+| Roll_no     | int(3)      | YES  |     | NULL    |                |
+| Name        | varchar(10) | YES  |     | NULL    |                |
+| Last_Name   | varchar(10) | YES  |     | NULL    |                |
+| DOB         | date        | YES  |     | NULL    |                |
+| Blood_Group | varchar(4)  | YES  |     | NULL    |                |
+| Mobile_No   | varchar(10) | YES  |     | NULL    |                |
+| Email_id    | varchar(15) | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from student;
++-------+---------+----------+-----------+------------+-------------+------------+----------+
+| Sr_No | Roll_no | Name     | Last_Name | DOB        | Blood_Group | Mobile_No  | Email_id |
++-------+---------+----------+-----------+------------+-------------+------------+----------+
+|     1 |       6 | Akhilesh | NULL      | 2004-01-01 | B+ve        | 9874561230 | tempm    |
+|     2 |       7 | Krunal   | NULL      | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|     3 |       8 | Omkar    | NULL      | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|     4 |      10 | Sahil    | NULL      | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|     5 |       9 | Ujwal    | NULL      | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|     6 |      21 | Parth    | NULL      | 2003-01-01 | O+ve        | 5647123689 | temp     |
+|     7 |      39 | Kaustubh | NULL      | 2003-01-01 | O+ve        | 5647123689 | temp     |
++-------+---------+----------+-----------+------------+-------------+------------+----------+
+7 rows in set (0.00 sec)
+
+mysql> 
