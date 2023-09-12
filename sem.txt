@@ -1,0 +1,90 @@
+Title: Automated Attendance System Using AI & IoT
+Subtitle: Enhancing Classroom Efficiency
+Introduction:
+Brief overview of the paper.
+Significance of automated attendance systems in education.
+The problem of traditional attendance methods.
+Slide 2: System Architecture
+
+System Architecture:
+Components:
+Embedded Device with Camera Sensor
+Cloud Server & IoT Infrastructure
+Data Flow:
+Capturing student data.
+Data processing steps.
+Real-time update to the Cloud server.
+Administrator's Role:
+Managing identifying data.
+Updating data for roll call.
+Handling new students.
+Slide 3: Recognition Process and Results
+
+Recognition Process:
+Facial Landmark Detection:
+Explanation of 68 key points on the human face.
+Convolutional Neural Network (CNN):
+Detailed explanation of CNN for feature extraction.
+Residual Network (ResNet):
+Benefits of ResNet in deep learning.
+K-Nearest Neighbors (KNN):
+Overview of KNN for classification.
+Experimental Results:
+Average detection and recognition times.
+Accuracy vs. distance.
+The impact of camera lens focal length.
+Slide 4: Conclusion and Future Work
+
+Conclusion:
+Key findings and achievements.
+The paper's contribution to automated attendance systems.
+Future Work:
+Research Directions:
+Expanding the system's capabilities.
+Enhancing recognition accuracy.
+Practical Applications:
+Implementing the system in various educational settings.
+Challenges:
+Addressing limitations and potential issues.
+Conclusion:
+Reiteration of the system's significance.
+
+Slide 1: Title and Introduction
+
+Title: Hybrid Student Authentication System
+Subtitle: RFID and Face Biometrics with Deep Learning
+Introduction:
+Briefly introduce the paper's topic and purpose.
+Mention the significance of efficient attendance management and security in educational institutions.
+Highlight the paper's approach to address these challenges.
+Slide 2: The Proposed System
+
+Proposed System:
+Overview:
+Describe the hybrid system combining RFID and face biometrics.
+Benefits:
+Explain the advantages of using both RFID and facial recognition.
+Emphasize efficiency and accuracy in attendance management.
+System Components:
+RFID Readers
+Facial Recognition Cameras
+Deep Learning Algorithms
+Slide 3: Key Steps in the System
+
+Key Steps:
+RFID Identification:
+Explain the use of RFID cards for initial identification.
+Facial Recognition:
+Describe how the system detects and matches faces using cameras.
+Data Integration:
+Explain how RFID and facial data are combined for enhanced authentication.
+Attendance Management:
+Highlight how the system tracks and records student attendance digitally.
+Slide 4: Conclusion and Impact
+
+Conclusion:
+Summarize the paper's findings and contributions.
+Reiterate the significance of the hybrid system.
+Impact:
+Discuss the potential impact on educational institutions.
+Mention improved efficiency, security, and ease of attendance management.
