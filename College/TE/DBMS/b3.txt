@@ -1,0 +1,100 @@
+import pymongo
+
+client = pymongo.MongoClient()
+db = client["Employee"]
+collection = db["Employee"]
+
+# Return the Total Salary of per Company
+def map_total_salary_per_company(doc):
+    yield (doc["CompanyName"], doc["Salary"])
+
+def reduce_total_salary_per_company(key, values):
+    total_salary = 0
+    for value in values:
+        total_salary += value
+    return total_salary
+
+mapreduce = collection.map_reduce(map_total_salary_per_company, reduce_total_salary_per_company, out="TotalSalaryPerCompany")
+
+for result in mapreduce.find():
+    print(result)
+
+# Return the Total Salary of Company Name:"TCS"
+def map_total_salary_of_tcs(doc):
+    if doc["CompanyName"] == "TCS":
+        yield ("TCS", doc["Salary"])
+
+def reduce_total_salary_of_tcs(key, values):
+    total_salary = 0
+    for value in values:
+        total_salary += value
+    return total_salary
+
+mapreduce = collection.map_reduce(map_total_salary_of_tcs, reduce_total_salary_of_tcs, out="TotalSalaryOfTCS")
+
+for result in mapreduce.find():
+    print(result)
+
+# Return the Avg Salary of Company whose address is “Pune”
+def map_avg_salary_of_pune(doc):
+    if doc["Address"]["city"] == "Pune":
+        yield ("Pune", doc["Salary"])
+
+def reduce_avg_salary_of_pune(key, values):
+    total_salary = 0
+    count = 0
+    for value in values:
+        total_salary += value
+        count += 1
+    avg_salary = total_salary / count
+    return avg_salary
+
+mapreduce = collection.map_reduce(map_avg_salary_of_pune, reduce_avg_salary_of_pune, out="AvgSalaryOfPune")
+
+for result in mapreduce.find():
+    print(result)
+
+# Return the Total Salary for each Designation of Infosys
+def map_total_salary_of_infosys_by_designation(doc):
+    if doc["CompanyName"] == "Infosys":
+        yield (doc["Designation"], doc["Salary"])
+
+def reduce_total_salary_of_infosys_by_designation(key, values):
+    total_salary = 0
+    for value in values:
+        total_salary += value
+    return total_salary
+
+mapreduce = collection.map_reduce(map_total_salary_of_infosys_by_designation, reduce_total_salary_of_infosys_by_designation, out="TotalSalaryOfInfosysByDesignation")
+
+for result in mapreduce.find():
+    print(result)
+
+# Return total count for “State=AP”
+def map_total_count_for_state_ap(doc):
+    if doc["Address"]["state"] == "AP":
+        yield ("AP", 1)
+
+def reduce_total_count_for_state_ap(key, values):
+    total_count = 0
+    for value in values:
+        total_count += 1
+    return total_count
+
+mapreduce = collection.map_reduce(map_total_count_for_state_ap, reduce_total_count_for_state_ap, out="TotalCountForStateAP")
+
+for result in mapreduce.find():
+    print(result)
+
+# Return Count for State AP and Age greater than 40
+def map_count_for_state_ap_and_age_greater_than_40(doc):
+    if doc["Address"]["state"] == "AP" and doc["Age"] > 40:
+        yield ("AP", 1)
+
+def reduce_count_for_state_ap_and_age_greater_than_40(key, values):
+    total_count = 0
+    for value in values:
+        total_count += 1
+    return total_count
+
+mapreduce = collection.map_reduce(map_count_for_state_ap_and_age_greater_than_40, reduce_count_for_state_ap_and_age_greater_than
