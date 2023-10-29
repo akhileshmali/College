@@ -1,0 +1,137 @@
+use Empdb
+db.createCollection("Employee", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["Empid", "Name", "CompanyName", "Salary", "Designation", "Age", "Expertise", "DOB", "Email", "Contact", "Address"],
+      properties: {
+        Empid: {
+          bsonType: "int"
+        },
+        Name: {
+          bsonType: "embedded",
+          required: ["FName", "LName"],
+          properties: {
+            FName: {
+              bsonType: "string"
+            },
+            LName: {
+              bsonType: "string"
+            }
+          }
+        },
+        CompanyName: {
+          bsonType: "string"
+        },
+        Salary: {
+          bsonType: "int"
+        },
+        Designation: {
+          bsonType: "string"
+        },
+        Age: {
+          bsonType: "int"
+        },
+        Expertise: {
+          bsonType: "array"
+        },
+        DOB: {
+          bsonType: ["string", "date"]
+        },
+        Email: {
+          bsonType: "string"
+        },
+        Contact: {
+          bsonType: "string"
+        },
+        Address: {
+          bsonType: "array",
+          items: {
+            bsonType: "embedded",
+            required: ["PAddr", "LAddr"],
+            properties: {
+              PAddr: {
+                bsonType: "string"
+              },
+              LAddr: {
+                bsonType: "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+})
+
+# Insert 10 documents in Employee collection
+db.Employee.insertMany([
+  {
+    "Empid": 1,
+    "Name": {
+      "FName": "John",
+      "LName": "Doe"
+    },
+    "CompanyName": "Infosys",
+    "Salary": 50000,
+    "Designation": "Developer",
+    "Age": 30,
+    "Expertise": ["Java", "Python", "MongoDB"],
+    "DOB": "1992-08-05",
+    "Email": "john.doe@infosys.com",
+    "Contact": "9876543210",
+    "Address": [
+      {
+        "PAddr": "123 Main Street",
+        "LAddr": "Pune, Maharashtra"
+      }
+    ]
+  },
+  {
+    "Empid": 2,
+    "Name": {
+      "FName": "Jane",
+      "LName": "Doe"
+    },
+    "CompanyName": "TCS",
+    "Salary": 40000,
+    "Designation": "Tester",
+    "Age": 25,
+    "Expertise": ["Selenium", "Appium", "JIRA"],
+    "DOB": "1997-06-15",
+    "Email": "jane.doe@tcs.com",
+    "Contact": "8765432109",
+    "Address": [
+      {
+        "PAddr": "456 Elm Street",
+        "LAddr": "Mumbai, Maharashtra"
+      }
+    ]
+  },
+  {
+    "Empid": 3,
+    "Name": {
+      "FName": "Peter",
+      "LName": "Parker"
+    },
+    "CompanyName": "Wipro",
+    "Salary": 60000,
+    "Designation": "Manager",
+    "Age": 35
+    }
+    }}])
+db.Employee.find({ Designation: "Programmer", Salary: { $gt: 30000 } })
+db.Employee.insertOne({
+  Designation: "Tester",
+  CompanyName: "TCS",
+  Age: 25
+}, { upsert: true })
+
+db.Employee.find({ $or: [ { Age: { $lt: 30 } }, { Salary: { $gt: 40000 } } ] })
+db.Employee.find({ Address: { $elemMatch: { city: "Pune", Pin_code: "411001" } } })
+db.Employee.updateMany({ CompanyName: "TCS" }, { $inc: { Salary: 2000 } })
+db.Employee.find({ Designation: { $ne: "Developer" } })
+db.Employee.find({ CompanyName: "Infosys" }, { _id: 1, Designation: 1, Address: 1, Name: 1 })
+db.Employee.find({ Designation: { $in: ["Developer", "Tester"] } })
+db.Employee.find({ Expertise: { $all: ["Mongodb", "Mysql", "Cassandra"] } })
+db.Employee.deleteOne({ Designation: "Developer" })
