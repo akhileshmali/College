@@ -1,0 +1,64 @@
+1. Return Designation with Total Salary is Above 200000:
+db.Employee.aggregate([
+    { $group: { _id: "$Designation", TotalSalary: { $sum: "$Salary" } } },
+    { $match: { TotalSalary: { $gt: 200000 } } }
+])
+
+2. Find Employee with Total Salary for Each City with Designation="DBA":
+db.Employee.aggregate([
+    { $match: { Designation: "DBA" } },
+    { $group: { _id: { City: "$Address.city" }, TotalSalary: { $sum: "$Salary" } } }
+])
+
+3. Find Total Salary of Employee with Designation="DBA" for Each Company:
+db.Employee.aggregate([
+    { $match: { Designation: "DBA" } },
+    { $group: { _id: { Company: "$CompanyName" }, TotalSalary: { $sum: "$Salary" } } }
+])
+
+4. Returns names and _id in upper case and in alphabetical order:
+db.Employee.aggregate([
+    { $project: { _id: 1, Name: { $toUpper: "$Name" } } },
+    { $sort: { Name: 1 } }
+])
+
+5. Count all records from collection:
+db.Employee.countDocuments()
+
+6. For each unique Designation, find avg Salary and output is sorted by AvgSal:
+db.Employee.aggregate([
+    { $group: { _id: "$Designation", AvgSal: { $avg: "$Salary" } } },
+    { $sort: { AvgSal: -1 } }
+])
+
+7. Return separates value in the Expertise array where Name of Employee="Swapnil":
+db.Employee.aggregate([
+    { $match: { Name: "Swapnil" } },
+    { $project: { _id: 0, Expertise: "$Expertise" } },
+    { $unwind: "$Expertise" }
+])
+
+8. Return separates value in the Expertise array and return sum of each element of array:
+db.Employee.aggregate([
+    { $project: { Expertise: "$Expertise" } },
+    { $unwind: "$Expertise" },
+    { $group: { _id: "$Expertise", Total: { $sum: 1 } } }
+])
+
+9. Return Array for Designation whose address is "Pune":
+db.Employee.aggregate([
+    { $match: { "Address.city": "Pune" } },
+    { $group: { _id: "$Designation" } }
+])
+
+10. Return Max and Min Salary for each company:
+db.Employee.aggregate([
+    { $group: { _id: "$CompanyName", MaxSal: { $max: "$Salary" }, MinSal: { $min: "$Salary" } } }
+])
+db.Employee.createIndex({ Designation: 1 })
+db.Employee.createIndex({ Name: 1, Age: -1 })
+db.Employee.createIndex({ Expertise: 1 })
+db.Employee.getIndexes()
+db.Employee.reIndex()
+db.Employee.dropIndex("Designation_1")
+db.Employee.dropIndexes()
