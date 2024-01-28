@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creamy Nuts</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #about-us {
+          background-color: #ffdec0;
+          padding: 50px 0;
+        }
+        #about-us h2 {
+          text-align: center;
+          margin-bottom: 30px;
+        }
+        #about-us p {
+          font-size: 18px;
+          line-height: 1.5;
+          margin-bottom: 20px;
+        }
+      </style>
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <input type="checkbox" name="" id="">
+                <div class="hamburger-lines">
+                    <span class="line line1"></span>
+                    <span class="line line2"></span>
+                    <span class="line line3"></span>
+                </div>
+                <h1 class="logo">Creamy Nuts</h1>
+                <ul class="menu-items">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#about-us">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+        <section class="home-container">
+            <div class="home">
+                <p>ENJOY YOUR HEALTHY DELICIOUS MEAL</p>
+                <h1>Treat Yourself</h1>
+                <p>Creamy Nuts is a culinary destination that tantalizes your taste buds with an array of mouthwatering
+                    flavors. Whether you're craving a savory meal or a sweet treat, Creamy Nuts
+                    offers a diverse menu that caters to every culinary preference.</p>
+                <p>ENJOY OUR SPECIAL OFFER</p>
+                <h1>Get 10% off on our signature dish</h1>
+                <p>Try our mouthwatering Creamy Nuts pasta, made with fresh ingredients and a secret blend of spices. Order now and get 10% off your first purchase!</p>
+                <a href="#menu" class="button" style="background-color: #ff4646; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Order Now</a>
+            </div>
+
+        </section>
+        <section id="about-us" class="scrollto">
+            <div class="container">
+              <div class="about-us">
+                <div class="about-us-image">
+                  <img src="cafe.jpg" alt="About Us Image">
+                </div>
+                <div class="about-us-text">
+                  <h2>About Us</h2>
+                  <p>Creamy Nuts is a culinary destination that tantalizes your taste buds with an array of mouthwatering flavors. Whether you're craving a savory meal or a sweet treat, Creamy Nuts offers a diverse menu that caters to every culinary preference.</p>
+                  <p>Our chefs are passionate about creating delicious and healthy meals using only the freshest ingredients. We believe that food should not only taste good but also be good for you.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <style>
+            .about-us {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: space-between;
+            }
+            .about-us-image {
+              flex: 1;
+              margin-right: 2rem;
+            }
+            .about-us-text {
+              flex: 2;
+            }
+            .about-us-image img {
+              max-width: 100%;
+              height: auto;
+            }
+          </style>
+    </header>
+    <div class="container food-container">
+        <section id="menu" class="scrollto">
+            <div class="container">
+              <h2>Menu</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Pizza</td>
+                    <td>Dish of Italian origin consisting of a flattened disk of bread dough topped with some combination of oregano, tomato, olives, mozzarella or other cheese, and many other ingredients, baked quickly and served hot</td>
+                    <td>₹300.00</td>
+                    <td><img src="1.jpg" alt="Food 1"></td>
+                  </tr>
+                  <tr>
+                    <td>Burger</td>
+                    <td>Delicious patty of grilled and placed between two halves of a bun, and it is often served with slices of raw onion, lettuce, bacon, mayonnaise, and other ingredients</td>
+                    <td>₹300.00</td>
+                    <td><img src="2.jpg" alt="Food 2"></td>
+                  </tr>
+                  <tr>
+                    <td>Fries</td>
+                    <td>Side dish or snack typically made from deep-fried potatoes that have been cut into various shapes, especially thin strips</td>
+                    <td>₹300.00</td>
+                    <td><img src="3.jpg" alt="Food 3"></td>
+                  </tr>
+                  <tr>
+                    <td>Coffee</td>
+                    <td>beverage brewed from roasted coffee beans, and it has a stimulating effect on humans due to its caffeine content</td>
+                    <td>₹300.00</td>
+                    <td><img src="4.jpg" alt="Food 4"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="contact" class="scrollto">
+            <div class="container">
+              <h2>Contact Us</h2>
+              <form action="#">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+          
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+          
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+          
+                <button type="submit">Send</button>
+              </form>
+            </div>
+          </section>
+    </div>
+    <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <h3>Address</h3>
+              <p>Opposite Wadia College of Engineering</p>
+              <p>Pune</p>
+            </div>
+            <div class="col">
+              <h3>Hours</h3>
+              <p>Monday - Friday: 9am - 9pm</p>
+              <p>Saturday - Sunday: 10am - 10pm</p>
+            </div>
+            <div class="col">
+              <h3>Contact Us</h3>
+              <p>Phone: 9999999999</p>
+              <p>Email: info@creamynuts.com</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <p>&copy; 2024 creamynuts</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+</body>
+
+</html>
