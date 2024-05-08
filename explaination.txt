@@ -1,0 +1,120 @@
+WordCount
+Package and Imports
+package org.myorg;: This line specifies the package name for the Java class. The package name is a way to organize and group related classes together, making it easier to manage and access them.
+import java.io.IOException;: This line imports the IOException class from the Java standard library, which is used to handle input/output errors.
+import java.util.*;: This line imports all the classes from the java.util package, which provides various utility classes and data structures, such as List, Map, and Iterator.
+import org.apache.hadoop.fs.Path;: This line imports the Path class from the Apache Hadoop file system library, which is used to represent file paths.
+import org.apache.hadoop.conf.*;: This line imports all the classes from the Apache Hadoop configuration package, which is used to set up and configure the Hadoop environment.
+import org.apache.hadoop.io.*;: This line imports all the classes from the Apache Hadoop I/O package, which provides various data types for input and output, such as Text and IntWritable.
+import org.apache.hadoop.mapred.*;: This line imports all the classes from the Apache Hadoop MapReduce package, which provides the core functionality for the MapReduce programming model.
+import org.apache.hadoop.util.*;: This line imports all the classes from the Apache Hadoop utility package, which provides various utility classes and methods.
+WordCount Class
+public class WordCount {: This line declares the main class for the WordCount program.
+Map Class
+public static class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable> {: This line defines an inner class called Map that extends the MapReduceBase class and implements the Mapper interface. The Mapper interface is a key part of the MapReduce programming model, and it defines the map function that processes input data and produces intermediate key-value pairs.
+private final static IntWritable one = new IntWritable(1);: This line creates a constant IntWritable object with the value of 1, which will be used to represent the count of each word.
+private Text word = new Text();: This line creates a Text object to hold the current word being processed.
+public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {: This line defines the map method, which is the core of the map function. The method takes four parameters:
+LongWritable key: The input key, which is the offset of the current line in the input file.
+Text value: The input value, which is the current line of text from the input file.
+OutputCollector<Text, IntWritable> output: The output collector, which is used to emit the intermediate key-value pairs.
+Reporter reporter: A reporter object that can be used to provide progress updates and other information.
+String line = value.toString();: This line converts the input Text value to a String for easier processing.
+StringTokenizer tokenizer = new StringTokenizer(line);: This line creates a StringTokenizer object to split the input line into individual words.
+while (tokenizer.hasMoreTokens()) {: This line starts a loop that iterates over each word in the input line.
+word.set(tokenizer.nextToken());: This line sets the word object to the current word from the input line.
+output.collect(word, one);: This line emits the current word and the count of 1 as an intermediate key-value pair, using the OutputCollector object.
+}: This line closes the loop that iterates over the words in the input line.
+}: This line closes the map method.
+Reduce Class
+public static class Reduce extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable> {: This line defines an inner class called Reduce that extends the MapReduceBase class and implements the Reducer interface. The Reducer interface is another key part of the MapReduce programming model, and it defines the reduce function that processes the intermediate key-value pairs and produces the final output.
+public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {: This line defines the reduce method, which is the core of the reduce function. The method takes four parameters:
+Text key: The intermediate key, which is the current word.
+Iterator<IntWritable> values: An iterator over the values associated with the current key, which are the counts for the current word.
+OutputCollector<Text, IntWritable> output: The output collector, which is used to emit the final key-value pairs.
+Reporter reporter: A reporter object that can be used to provide progress updates and other information.
+int sum = 0;: This line initializes a variable to keep track of the total count for the current word.
+while (values.hasNext()) {: This line starts a loop that iterates over the values (counts) associated with the current word.
+sum += values.next().get();: This line adds the current value (count) to the running total.
+}: This line closes the loop that iterates over the values.
+output.collect(key, new IntWritable(sum));: This line emits the current word and the total count as a final key-value pair, using the OutputCollector object.
+}: This line closes the reduce method.
+}: This line closes the Reduce class.
+Main Method
+public static void main(String[] args) throws Exception {: This line defines the main method of the WordCount class, which is the entry point of the program.
+JobConf conf = new JobConf(WordCount.class);: This line creates a new JobConf object, which is used to configure the Hadoop job.
+conf.setJobName("wordcount");: This line sets the name of the job to "wordcount".
+conf.setOutputKeyClass(Text.class);: This line sets the output key class to Text, which means that the final output will have keys of type Text.
+conf.setOutputValueClass(IntWritable.class);: This line sets the output value class to IntWritable, which means that the final output will have values of type IntWritable.
+conf.setMapperClass(Map.class);: This line sets the mapper class to the Map class defined earlier.
+conf.setCombinerClass(Reduce.class);: This line sets the combiner class to the Reduce class defined earlier. The combiner is an optimization that can be used to perform partial aggregation of the intermediate key-value pairs before they are sent to the reducers.
+conf.setReducerClass(Reduce.class);: This line sets the reducer class to the Reduce class defined earlier.
+conf.setInputFormat(TextInputFormat.class);: This line sets the input format to TextInputFormat, which means that the input data is in plain text format.
+conf.setOutputFormat(TextOutputFormat.class);: This line sets the output format to TextOutputFormat, which means that the final output will be in plain text format.
+FileInputFormat.setInputPaths(conf, new Path(args));: This line sets the input path for the job, using the first command-line argument.
+FileOutputFormat.setOutputPath(conf, new Path(args));: This line sets the output path for the job, using the second command-line argument.
+JobClient.runJob(conf);: This line submits the job to the Hadoop cluster and waits for it to complete.
+}: This line closes the main method.
+}: This line closes the WordCount class.
+In summary, this code implements a simple word count program using the Apache Hadoop MapReduce framework. The program reads input text files, counts the occurrences of each word, and outputs the final word counts.
+
+LogCount
+
+Let's break down the code line by line:
+Package and Imports
+import java.io.IOException;: This line imports the IOException class from the Java standard library, which is used to handle input/output errors.
+import java.util.*;: This line imports all the classes from the java.util package, which provides various utility classes and data structures, such as List, Map, and Iterator.
+import org.apache.hadoop.fs.Path;: This line imports the Path class from the Apache Hadoop file system library, which is used to represent file paths.
+import org.apache.hadoop.conf.*;: This line imports all the classes from the Apache Hadoop configuration package, which is used to set up and configure the Hadoop environment.
+import org.apache.hadoop.io.*;: This line imports all the classes from the Apache Hadoop I/O package, which provides various data types for input and output, such as Text and IntWritable.
+import org.apache.hadoop.mapred.*;: This line imports all the classes from the Apache Hadoop MapReduce package, which provides the core functionality for the MapReduce programming model.
+import org.apache.hadoop.util.*;: This line imports all the classes from the Apache Hadoop utility package, which provides various utility classes and methods.
+LogCount Class
+public class LogCount {: This line declares the main class for the LogCount program.
+Map Class
+public static class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable> {: This line defines an inner class called Map that extends the MapReduceBase class and implements the Mapper interface. The Mapper interface is a key part of the MapReduce programming model, and it defines the map function that processes input data and produces intermediate key-value pairs.
+private final static IntWritable one = new IntWritable(1);: This line creates a constant IntWritable object with the value of 1, which will be used to represent the count of each country.
+public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {: This line defines the map method, which is the core of the map function. The method takes four parameters:
+LongWritable key: The input key, which is the offset of the current line in the input file.
+Text value: The input value, which is the current line of text from the input file.
+OutputCollector<Text, IntWritable> output: The output collector, which is used to emit the intermediate key-value pairs.
+Reporter reporter: A reporter object that can be used to provide progress updates and other information.
+String valueString = value.toString();: This line converts the input Text value to a String for easier processing.
+String[] SingleCountryData = valueString.split("-");: This line splits the input string into an array of strings using the hyphen (-) as a delimiter.
+output.collect(new Text(SingleCountryData), one);: This line emits the first element of the SingleCountryData array as the key and the constant one as the value, indicating that the country has been seen once.
+Reduce Class
+public static class Reduce extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable> {: This line defines an inner class called Reduce that extends the MapReduceBase class and implements the Reducer interface. The Reducer interface is another key part of the MapReduce programming model, and it defines the reduce function that processes the intermediate key-value pairs and produces the final output.
+public void reduce(Text t_key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {: This line defines the reduce method, which is the core of the reduce function. The method takes four parameters:
+Text t_key: The intermediate key, which is the current country.
+Iterator<IntWritable> values: An iterator over the values associated with the current key, which are the counts for the current country.
+OutputCollector<Text, IntWritable> output: The output collector, which is used to emit the final key-value pairs.
+Reporter reporter: A reporter object that can be used to provide progress updates and other information.
+Text key = t_key;: This line assigns the intermediate key to a local variable for easier use.
+int frequencyForCountry = 0;: This line initializes a variable to keep track of the total count for the current country.
+while (values.hasNext()) {: This line starts a loop that iterates over the values (counts) associated with the current country.
+IntWritable value = (IntWritable) values.next();: This line gets the next value from the iterator and casts it to the correct type.
+frequencyForCountry += value.get();: This line adds the current value (count) to the running total.
+}: This line closes the loop that iterates over the values.
+output.collect(key, new IntWritable(frequencyForCountry));: This line emits the current country and the total count as a final key-value pair, using the OutputCollector object.
+Main Method
+public static void main(String[] args) {: This line defines the main method of the LogCount class, which is the entry point of the program.
+JobClient my_client = new JobClient();: This line creates a new JobClient object, which is used to manage Hadoop jobs.
+JobConf job_conf = new JobConf(LogCount.class);: This line creates a new JobConf object, which is used to configure the Hadoop job.
+job_conf.setJobName("SalePerCountry");: This line sets the name of the job to "SalePerCountry".
+job_conf.setOutputKeyClass(Text.class);: This line sets the output key class to Text, which means that the final output will have keys of type Text.
+job_conf.setOutputValueClass(IntWritable.class);: This line sets the output value class to IntWritable, which means that the final output will have values of type IntWritable.
+job_conf.setMapperClass(LogCount.Map.class);: This line sets the mapper class to the Map class defined earlier.
+job_conf.setReducerClass(LogCount.Reduce.class);: This line sets the reducer class to the Reduce class defined earlier.
+job_conf.setInputFormat(TextInputFormat.class);: This line sets the input format to TextInputFormat, which means that the input data is in plain text format.
+job_conf.setOutputFormat(TextOutputFormat.class);: This line sets the output format to TextOutputFormat, which means that the final output will be in plain text format.
+FileInputFormat.setInputPaths(job_conf, new Path(args));: This line sets the input path for the job, using the first command-line argument.
+FileOutputFormat.setOutputPath(job_conf, new Path(args));: This line sets the output path for the job, using the second command-line argument.
+my_client.setConf(job_conf);: This line sets the configuration for the JobClient object.
+try {: This line starts a try block that attempts to run the job.
+JobClient.runJob(job_conf);: This line submits the job to the Hadoop cluster and waits for it to complete.
+} catch (Exception e) {: This line starts a catch block that handles any exceptions that occur during the job execution.
+e.printStackTrace();: This line prints the stack trace of the exception to the console.
+}: This line closes the try-catch block.
+}: This line closes the main method.
+}: This line closes the LogCount class.
+This code implements a simple MapReduce program that counts the occurrences of each country in a log file. The program reads input text files, splits each line into country names, and outputs the frequency of each country.
